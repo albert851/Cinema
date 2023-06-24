@@ -19,15 +19,14 @@ mongoose.connect(mongo_url).then(res => {
 }).catch((err) => {
     console.log("at mongoose.connect: ")
     console.log(err.message);
-    
 });
 
 app.use(express.json());
 app.use(express.static("public"));
-
-
 app.use(cookieParser());
 
+import adminRoutes from "./API/admin/adminRoutes";
+app.use("/api/admin", adminRoutes);
 
 app.listen(PORT, () => {
     console.log(`server is running on porrt: ${PORT}`)
