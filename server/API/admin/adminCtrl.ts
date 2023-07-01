@@ -25,7 +25,7 @@ export async function login(req: express.Request, res: express.Response) {
 
     const JWTCookie = jwt.encode(cookie, secret);
 
-    res.cookie("userID", JWTCookie);
+    res.cookie("adminID", JWTCookie);
     res.send({ login: true, adminDB });
   } catch (error) {
     res.send({ error: error.message });

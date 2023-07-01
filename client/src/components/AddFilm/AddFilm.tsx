@@ -25,15 +25,20 @@ const AddFilm = () => {
     setEditDay(ev.target.value);
   }
 
-  async function handleSaveTimeToArray() {
+  function handleSaveTimeToArray() {
     setEditTime([...editTime, timeInput]);
 
     setTimeInput("");
   }
-  async function handleAddTimeToDay() {
+
+  function handleAddTimeToDay() {
     setDayTime([...dayTime, { day: editDay, times: editTime }]);
     setEditDay("");
     setEditTime([]);
+  }
+
+  function removeTime(removeTime: any) {
+    setEditTime(editTime.filter((time) => time != removeTime));
   }
 
   return (
@@ -149,11 +154,15 @@ const AddFilm = () => {
             <div className="form__dayTimeDisplay">
               <div className="form__dayTimeDisplay__box">
                 {dayTime.map((day) => (
-                    <div className="dayTimeDisplay__box___day">{`${day.day}:, ${day.times}`}</div>
-                ))}</div>
+                  <div className="dayTimeDisplay__box___day">{`${day.day}:, ${day.times}`}</div>
+                ))}
+              </div>
               <div className="form__dayTimeDisplay__box">
                 {editTime.map((time) => (
-                  <div className="dayTimeDisplay__box___time">{`${time},`}</div>
+                  <div
+                    className="dayTimeDisplay__box___time"
+                    onClick={() => removeTime(time)}
+                  >{`${time},`}</div>
                 ))}
               </div>
             </div>

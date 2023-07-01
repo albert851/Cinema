@@ -7,7 +7,7 @@ const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
 app.use(express.json());
 
 mongoose.set('strictQuery', true);

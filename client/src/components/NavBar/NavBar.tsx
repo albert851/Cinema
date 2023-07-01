@@ -14,11 +14,15 @@ const NavBar = () => {
   async function handleSubmit(ev: any) {
     try {
       ev.preventDefault();
-      const { data } = await axios.post("/api/admin/register", {
+      const { data } = await axios.post("/api/admin/login", {
         email,
         password,
       });
-      console.log(data);
+      if(data.login){
+        setAdminDisp("none")
+        navigate("/admin")
+      }
+        
     } catch (error) {
       console.error(error);
     }
