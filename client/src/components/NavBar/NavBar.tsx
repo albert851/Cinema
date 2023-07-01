@@ -9,7 +9,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [adminDisp, setAdminDisp] = useState("block");
+  const [adminDisp, setAdminDisp] = useState("none");
 
   async function handleSubmit(ev: any) {
     try {

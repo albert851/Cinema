@@ -1,11 +1,11 @@
 import express from "express";
 import {
-  register,
+  login,
 } from "./adminCtrl";
 
 const router = express.Router();
 
 router
-  .post("/register", register)
+  .post("/login", login)
 
 export default router;

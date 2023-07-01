@@ -22,7 +22,7 @@ mongoose.connect(mongo_url).then(res => {
 });
 
 app.use(express.json());
-app.use(express.static("public"));
+// app.use(express.static("public"));
 app.use(cookieParser());
 
 import adminRoutes from "./API/admin/adminRoutes";

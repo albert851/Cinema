@@ -1,0 +1,168 @@
+
+.admin{
+    background-color: rgb(62, 1, 106);
+    width: 100rem;
+    height: 100rem;
+    // z-index: -1;
+    // position: relative;
+
+    .admin__add{
+        display: flex;
+
+        .admin__add__filmConteiner{
+            background-color: rgb(205,233,253);
+            width: 30%;
+            margin: 20px;
+            padding: 10px;
+            border-radius: 10px;
+
+            .filmConteiner__form {
+                color: rgb(62, 1, 106);
+
+                legend{
+                   font-size: larger;
+                }
+    
+                h4{
+                    color: rgb(62, 1, 106);
+                    margin-bottom: 5px;
+                }
+
+                .form__input{
+                    height: 30px;
+                    width: 70%;
+                    border-radius: 5px;
+                    border: 0;
+                    color: rgb(62, 1, 106);
+                }
+
+                .form__dayTimeSelect{
+                    display: flex;
+
+                    .form__dayTimeData{
+                        width: 35%;
+                        border: 1px solid rgb(62, 1, 106);
+
+                        h4{
+                            color: rgb(62, 1, 106);
+                            margin-bottom: 5px;
+                        }
+
+                        .form__dayTimeData__message{
+                            color: rgb(230, 76, 76);
+                            margin-bottom: 2px;
+                            margin-top: 0px;
+                        }
+
+                        .form__dayTimeData__select{
+                            height: 30px;
+                            color: rgb(62, 1, 106);
+                            border-radius: 10px;
+                            border: 0px;
+                            background-color: azure;
+                        }
+
+                        .form__dayTimeData__daySelected{
+                            margin-top: 3px;
+                        }
+
+                        .form__dayTimeData__timeInput{
+                            height: 30px;
+                            width: 70px;
+                            color: rgb(62, 1, 106);
+                            background-color: azure;
+                            border-radius: 10px;
+                            border: 0px;
+                        }
+
+                        .form__dayTimeData__addBtn{
+                            width: 50px;
+                            height: 30px;
+                            margin-bottom: 10px;
+                            font-size: small;
+                            border-radius: 5px;
+                            background-color: rgb(62, 1, 106);
+                            color: whitesmoke;
+                            border: 0px;
+                            margin-left: 15px;
+                            &:hover{
+                                border: 1px solid rgb(222, 189, 236);
+                            }
+                        }
+
+                        .form__dayTimeData__submit{
+                            width: 130px;
+                            height: 30px;
+                            font-size: small;
+                            border-radius: 5px;
+                            background-color: rgb(62, 1, 106);
+                            color: whitesmoke;
+                            border: 0px;
+
+                            &:hover{
+                                border: 1px solid rgb(222, 189, 236);
+                            }
+                        }
+                    }
+
+                    .form__dayTimeDisplay{
+                        border: 1px solid rgb(62, 1, 106);
+                        width: 65%;
+
+                        .form__dayTimeDisplay__box{
+                            width: 100%;
+                            height: 50%;
+                            border: 1px solid rgb(62, 1, 106);
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 5px;
+
+                            .dayTimeDisplay__box___time{
+                                width: 50px;
+                                height: 30px;
+                                color: rgb(62, 1, 106);
+                                font-size: large
+                            }
+                        }
+                    }
+                }
+
+                .form__textArea{
+                    height: 75px;
+                    width: 75%;
+                    margin-top: 15px;
+                    margin-right: 50%;
+                    margin-bottom: 20px;
+                }
+
+                .form__submit{
+                    width: 100px;
+                    height: 30px;
+                    margin-bottom: 20px;
+                    font-size: medium;
+                    border-radius: 5px;
+                    background-color: rgb(62, 1, 106);
+                    color: whitesmoke;
+                    border: 0px;
+
+                    &:hover{
+                        border: 1px solid rgb(222, 189, 236);
+                    }
+                }
+            }
+        }
+
+        .admin__filmPic{
+            width: 57%;
+            margin: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+
+            .admin__filmPic__img{
+                height: 100%;
+
+            }
+        }
+    }
+}

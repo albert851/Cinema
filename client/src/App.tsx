@@ -3,14 +3,15 @@ import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./views/Home/Home";
 import NavBar from './components/NavBar/NavBar';
+import Admin from "./views/Admin/Admin";
 
 function App() {
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
-        <Route element={<NavBar />} >
-          <Route path="/" element={<Home />} />
-        </Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
