@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
 
 interface MovieDayTime {
@@ -6,6 +7,7 @@ interface MovieDayTime {
 }
 
 const AddFilm = () => {
+  const [age, setAge] = useState();
   const [title, setTitle] = useState();
   const [genre, setGenre] = useState();
   const [cast, setCast] = useState();
@@ -19,19 +21,42 @@ const AddFilm = () => {
 
   const filmTime = (ev: any) => {};
 
-  async function handleAddNewFilm() {}
+  async function handleAddNewFilm(ev: any) {
+    ev.preventDefault();
+    try {
+      const { data } = await axios.post("/api/film/newFilm", {
+        title: title,
+        genree: genre,
+        cast: cast,
+        director: director,
+        age: age,
+        pic: url,
+        screeningTimes: dayTime,
+        summary: summary
+      });
+
+      if (data) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleAddDay(ev: React.ChangeEvent<HTMLSelectElement>) {
     setEditDay(ev.target.value);
   }
 
-  function handleSaveTimeToArray() {
-    setEditTime([...editTime, timeInput]);
+  function handleSaveTimeToArray(ev: any) {
+    ev.preventDefault();
 
+    setEditTime([...editTime, timeInput]);
     setTimeInput("");
   }
 
-  function handleAddTimeToDay() {
+  function handleAddTimeToDay(ev: any) {
+    ev.preventDefault();
+
     setDayTime([...dayTime, { day: editDay, times: editTime }]);
     setEditDay("");
     setEditTime([]);
@@ -88,6 +113,17 @@ const AddFilm = () => {
             required
             onInput={(ev: any) => {
               setDirector(ev.target.value);
+            }}
+          />
+          <h4>Age restrictions:</h4>
+          <input
+            className="form__input"
+            value={age}
+            type="text"
+            placeholder="Age restrictions:"
+            required
+            onInput={(ev: any) => {
+              setAge(ev.target.value);
             }}
           />
           <h4>PicUrl</h4>
@@ -154,7 +190,7 @@ const AddFilm = () => {
             <div className="form__dayTimeDisplay">
               <div className="form__dayTimeDisplay__box">
                 {dayTime.map((day) => (
-                  <div className="dayTimeDisplay__box___day">{`${day.day}:, ${day.times}`}</div>
+                  <div className="dayTimeDisplay__box___day">{`${day.day}: ${day.times}`}</div>
                 ))}
               </div>
               <div className="form__dayTimeDisplay__box">

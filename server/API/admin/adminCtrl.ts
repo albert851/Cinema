@@ -31,3 +31,33 @@ export async function login(req: express.Request, res: express.Response) {
     res.send({ error: error.message });
   }
 }
+
+export async function logout(req, res) {
+  try {
+    res.clearCookie("adminID");
+    res.send({ logout: true });
+  } catch (error: any) {
+    res.status(500).send({ error: error.message });
+  }
+}
+
+export async function getByCookie(req: express.Request, res: express.Response) {
+  try {
+    const secret = process.env.JWT_SECRET;
+    if(!secret) throw new Error("Couldn't load secret from .env");
+
+    const { adminID } = req.cookies;
+    if (!adminID) throw new Error("Couldn't find admin from cookies");
+
+    const decodedid = jwt.decode(adminID, secret);
+    const { adminId } = decodedid;
+
+    const adminDB = await AdminModel.findById(adminId);
+      if (!adminDB) throw new Error(`Couldn't find admin id with the id: ${adminId}`);
+    
+    res.send({ adminDB })
+
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+}

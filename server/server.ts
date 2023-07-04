@@ -28,6 +28,9 @@ app.use(cookieParser());
 import adminRoutes from "./API/admin/adminRoutes";
 app.use("/api/admin", adminRoutes);
 
+import filmRoutes from "./API/film/filmRoutes";
+app.use("/api/film", filmRoutes);
+
 app.listen(PORT, () => {
     console.log(`server is running on porrt: ${PORT}`)
 })

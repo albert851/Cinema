@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import adminSlice from "../features/admin/adminSlise";
 
 export const store = configureStore({
   reducer: {
-
+    admin: adminSlice
   },
 });
 
