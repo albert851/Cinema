@@ -2,8 +2,16 @@
 @import "./components/NavBar/NavBar.scss";
 @import "./views/Admin/Admin.scss";
 @import "./components/AddFilm/AddFilm.scss";
+@import "./components/FilmList/FilmList.scss";
+@import "./components/FilmCard/FilmCard.scss";
+@import "./components/UpdateFilm/UpdateFilm.scss";
 
 .App {
   text-align: center;
+  
+}
+
+body{
+  overflow-x: hidden;
 }
 

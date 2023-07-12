@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 
 interface MovieDayTime {
   day: string;
-  times: string[];
+  times: String[];
 }
 
 const AddFilm = () => {
@@ -18,11 +18,14 @@ const AddFilm = () => {
   const [editDay, setEditDay] = useState("");
   const [timeInput, setTimeInput] = useState("");
   const [dayTime, setDayTime] = useState<MovieDayTime[]>([]);
+  const [seats, setSeats] = useState<boolean[]>(Array(100).fill(false));
+  const [film, setFilm] = useState<any>();
 
   const filmTime = (ev: any) => {};
 
   async function handleAddNewFilm(ev: any) {
     ev.preventDefault();
+
     try {
       const { data } = await axios.post("/api/film/newFilm", {
         title: title,
@@ -32,11 +35,47 @@ const AddFilm = () => {
         age: age,
         pic: url,
         screeningTimes: dayTime,
-        summary: summary
+        summary: summary,
       });
 
       if (data) {
-        console.log(data);
+        setFilm(data.filmDB);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleScreeningByTime = () => {
+    if(film){
+      const filmId = film._id;
+      const dayList = film.screeningTimes;
+
+      dayList.map((currentDay: any) => {
+        const dayId = currentDay._id;
+        const day = currentDay.day;
+        const timesList = currentDay.times;
+
+        timesList.map((currentTime: any) => {
+          const time = currentTime;
+          handleAddScreening(filmId, dayId, day, time)
+        })
+      })
+    }
+  }
+
+  async function handleAddScreening(filmId: string, dayId: string, day: string, time: string) {
+    try {
+      const { data } = await axios.post("/api/screening/newScreening", {
+        filmId,
+        dayId,
+        day,
+        time,
+        seats
+      });
+
+      if (data) {
+        window.location.reload();
       }
     } catch (error) {
       console.error(error);
@@ -65,6 +104,10 @@ const AddFilm = () => {
   function removeTime(removeTime: any) {
     setEditTime(editTime.filter((time) => time != removeTime));
   }
+
+  useEffect(() => {
+    handleScreeningByTime()
+  }, [film]);
 
   return (
     <div className="addFilm">

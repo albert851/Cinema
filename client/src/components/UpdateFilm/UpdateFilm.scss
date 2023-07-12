@@ -1,0 +1,77 @@
+.update{
+    display: flex;
+
+    .update__container{
+        background-color: rgb(205,233,253);
+        width: 40%;
+        margin: 20px;
+        padding: 10px;
+        border-radius: 10px;
+
+        .update__container__form {
+            color: rgb(62, 1, 106);
+
+            .container__form__title{
+                display: flex;
+                justify-content: space-between;
+                legend{
+                    font-size: larger;
+                 }
+            }
+
+            h4{
+                color: rgb(62, 1, 106);
+                margin-bottom: 5px;
+            }
+
+            p{
+                color: rgb(62, 1, 106);
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+
+            .form__input{
+                height: 30px;
+                width: 70%;
+                border-radius: 5px;
+                border: 0;
+                color: rgb(62, 1, 106);
+            }
+
+            .form__textArea{
+                height: 75px;
+                width: 75%;
+                margin-right: 50%;
+                margin-bottom: 20px;
+            }
+
+            .form__submit{
+                width: 100px;
+                height: 30px;
+                margin-bottom: 20px;
+                font-size: medium;
+                border-radius: 5px;
+                background-color: rgb(62, 1, 106);
+                color: whitesmoke;
+                border: 0px;
+
+                &:hover{
+                    border: 1px solid rgb(222, 189, 236);
+                }
+            }
+        }
+    }
+
+    .update__filmPic{
+        width: 57%;
+        margin: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+
+        .update__filmPic__img{
+            height: 100%;
+
+        }
+    }
+}

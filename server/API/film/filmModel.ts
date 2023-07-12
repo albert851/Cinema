@@ -4,7 +4,7 @@ const FilmSchema = new mongoose.Schema({
     title: String,
     genree: String,
     cast: String,
-    Director: String,
+    director: String,
     age: String,
     pic: String,
     screeningTimes: [{

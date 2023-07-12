@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import adminSlice from "../features/admin/adminSlise";
+import selectedFilmSlice from "../features/film/selectedFilm";
 
 export const store = configureStore({
   reducer: {
-    admin: adminSlice
+    admin: adminSlice,
+    film: selectedFilmSlice
   },
 });
 

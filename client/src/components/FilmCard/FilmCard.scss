@@ -1,0 +1,69 @@
+.film{
+    position: relative;
+    width: 300px;
+    border-radius: 5px;
+
+    .film__description{
+        position: absolute;
+        padding: 10px;
+        text-align: center;
+        opacity: 0;
+        top: -10%;
+        left: -10%;
+        width: 93.5%;
+        height: 94.5%;
+        background-color: rgb(205,233,253);
+        border-radius: 1%;
+        transition: all 1s;
+
+        &:hover {
+            opacity: 0.8;
+            left: 0;
+            top: 0;
+            color: rgb(205,233,253);
+            
+            .film__description__titele{
+                color: rgb(62, 1, 106);
+            }
+    
+            .film__description__summary{
+                color: rgb(62, 1, 106);
+            }
+        }
+
+        .film__description__buttons{
+            margin-top: 30px;
+
+            .description__buttons__btn{
+                width: 100px;
+                height: 30px;
+                margin-bottom: 20px;
+                margin-left: 30%;
+                margin-right: 50%;
+                font-size: medium;
+                border-radius: 5px;
+                background-color: rgb(62, 1, 106);
+                color: whitesmoke;
+                border: 0px;
+
+                &:hover{
+                    border: 1px solid rgb(222, 189, 236);
+                }
+            }
+
+            .btn__delete{
+                &:hover{
+                    border: 3px solid red;
+                }
+            }
+        }
+    }  
+
+    
+
+    .film__pic{
+        width: 100%;
+        border-radius: 5px;
+    }
+}
+

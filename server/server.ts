@@ -31,6 +31,9 @@ app.use("/api/admin", adminRoutes);
 import filmRoutes from "./API/film/filmRoutes";
 app.use("/api/film", filmRoutes);
 
+import screeningRoutes from "./API/screening/screeningRoutes";
+app.use("/api/screening", screeningRoutes);
+
 app.listen(PORT, () => {
     console.log(`server is running on porrt: ${PORT}`)
 })
