@@ -1,11 +1,17 @@
 
 .films{
-    margin: auto;
-    margin-top: 30px;
-    padding: 30px;
-    width: 80vw;
+    margin-left: 14px;
+    margin-top: 50px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: space-around;
+    gap: 20px;
+    overflow-x: auto;
+    width: 97vw;
+
+    &::-webkit-scrollbar{
+        width: 0;
+    }
 }
+
+.films > div {
+    transform-origin: right top;
+  }

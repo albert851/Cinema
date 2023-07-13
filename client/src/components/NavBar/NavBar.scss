@@ -6,31 +6,43 @@
   padding: 15px;
   padding-right: 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   position: sticky;
   top: 1px;
   transition: all 2s ease-in-out;
+  
+  .navBar__order{
+    background-color: rgba(246, 15, 15, 0.805);
+    height: 30px;
+    padding: 15px;
+    padding-top: 10px;
+    border-radius: 15px;
+    color: rgba(205, 233, 253, 0.848);
+    margin-top: 5px;
+  }
 
   .navBar__icon {
     display: flex;
+    position: relative;
     gap: 9px;
-    margin-left: 100px;
-    margin-top: 5px;
-    width: 700px;
+    margin-top: 10px;
+    width: 80px;
 
     .navBar__cinemaIcon {
       position: absolute;
-      width: 420px;
-      height: 90px;
+      width: 120px;
+      height: 120px;
       color: rgb(222, 189, 236);
-      left: -43px;
-      top: -2px;
+      left: 9px;
+      top: -35px;
+
+      
     }
 
     .navBar__icon__title__1 {
       color: rgb(137, 39, 121);
       font-family: fantasy;
-      margin-top: 20px;
+      margin-right: 3px;
     }
 
     .navBar__icon__title__2 {
@@ -42,6 +54,17 @@
 
   .navBar__btns {
     margin-right: 30px;
+    display: flex;
+    gap: 30px;
+
+    .navBar__btns__search {
+      display: flex;
+      gap: 25px;
+      h2{
+        color: rgba(205, 233, 253, 0.848);
+      }
+    }
+
     .navBar__btns__options {
       height: 90%;
       .navBar__btns__admin {
@@ -59,7 +82,7 @@
   padding: 10px;
   width: 200px;
   height: 250px;
-  background-color: rgb(205, 233, 253);
+  background-color: rgba(205, 233, 253, 0.848);
   top: 105px;
   left: 80%;
   border-radius: 10px 0 10px 10px;

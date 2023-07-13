@@ -1,0 +1,27 @@
+.search{
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+
+    .search__input{
+        background-color: rgba(205, 233, 253, 0.848);
+        height: 30px;
+        width: 150px;
+        color: rgb(62, 1, 106);
+        border-radius: 5px;
+        border: 0px;
+        padding: 5px;
+        margin-top: 10px;
+        font-size: medium;
+        
+        &:focus {
+            outline: none;
+            color: rgb(62, 1, 106);
+          }
+    }
+
+    h2{
+        color: rgba(205, 233, 253, 0.848);
+        font-size:larger;
+    }
+}

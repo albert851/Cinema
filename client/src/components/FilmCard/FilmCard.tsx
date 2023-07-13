@@ -3,7 +3,7 @@ import { adminSelector } from "../../features/admin/adminSlise";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { changeFilm } from "../../features/film/selectedFilm";
-import { error } from 'console';
+import { error } from "console";
 import axios from "axios";
 
 interface FilmCardProps {
@@ -16,6 +16,7 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
   const [title, setTitle] = useState<string>();
   const [summary, setSummary] = useState<string>();
   const [filmId, setFilmId] = useState<string>();
+  const [ageRestriction, setAgeRestriction] = useState<string>();
   const admin = useAppSelector(adminSelector);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -37,10 +38,13 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
 
   async function handleDeleteFilm() {
     try {
-      const {data} = await axios.delete(`/api/film/${filmId}`)
-      console.log(data)
+      const { data } = await axios.delete(`/api/film/${filmId}`);
+
+      if (data) {
+        window.location.reload();
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
@@ -49,10 +53,14 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
     setTitle(film.title);
     setSummary(film.summary);
     setFilmId(film._id);
+    if (film.age == "14+" || film.age == "18+") {
+      setAgeRestriction(film.age);
+    }
   }, []);
 
   return (
-    <div className="film">
+    // <div className={film === "header" ? "header_film" : film === "main" ? "main" : "card"}>
+    <div className = "film">
       <span className="film__description">
         <h2 className="film__description__titele">{title}</h2>
         <h3 className="film__description__summary">{summary}</h3>
@@ -79,6 +87,13 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
         )}
       </span>
       <img className="film__pic" src={pic}></img>
+      {ageRestriction ? (
+        <div className="film__pic__ageRestriction">
+          <h3>{ageRestriction}</h3>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

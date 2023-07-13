@@ -21,8 +21,6 @@ const AddFilm = () => {
   const [seats, setSeats] = useState<boolean[]>(Array(100).fill(false));
   const [film, setFilm] = useState<any>();
 
-  const filmTime = (ev: any) => {};
-
   async function handleAddNewFilm(ev: any) {
     ev.preventDefault();
 
@@ -47,7 +45,7 @@ const AddFilm = () => {
   }
 
   const handleScreeningByTime = () => {
-    if(film){
+    if (film) {
       const filmId = film._id;
       const dayList = film.screeningTimes;
 
@@ -58,20 +56,25 @@ const AddFilm = () => {
 
         timesList.map((currentTime: any) => {
           const time = currentTime;
-          handleAddScreening(filmId, dayId, day, time)
-        })
-      })
+          handleAddScreening(filmId, dayId, day, time);
+        });
+      });
     }
-  }
+  };
 
-  async function handleAddScreening(filmId: string, dayId: string, day: string, time: string) {
+  async function handleAddScreening(
+    filmId: string,
+    dayId: string,
+    day: string,
+    time: string
+  ) {
     try {
       const { data } = await axios.post("/api/screening/newScreening", {
         filmId,
         dayId,
         day,
         time,
-        seats
+        seats,
       });
 
       if (data) {
@@ -106,7 +109,7 @@ const AddFilm = () => {
   }
 
   useEffect(() => {
-    handleScreeningByTime()
+    handleScreeningByTime();
   }, [film]);
 
   return (
@@ -191,6 +194,7 @@ const AddFilm = () => {
                     className="form__dayTimeData__timeInput"
                     type="time"
                     value={timeInput}
+                    required
                     onInput={(ev: any) => {
                       setTimeInput(ev.target.value);
                     }}

@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react'
-import FilmCard from '../FilmCard/FilmCard';
+import axios from "axios";
+import React, { FC, useEffect, useState } from "react";
+import FilmCard from "../FilmCard/FilmCard";
 
-interface FilmListProps{
+interface FilmListProps {
   setUpdate: CallableFunction;
 }
 
@@ -12,8 +12,8 @@ const FilmList: FC<FilmListProps> = ({ setUpdate }) => {
   async function handleGetFilms() {
     try {
       const { data } = await axios.get("/api/film/allFilms");
-      
-      if(data){
+
+      if (data) {
         setFilms(data.filmsDB);
       }
     } catch (error) {
@@ -22,16 +22,16 @@ const FilmList: FC<FilmListProps> = ({ setUpdate }) => {
   }
 
   useEffect(() => {
-    handleGetFilms()
+    handleGetFilms();
   }, []);
 
   return (
-    <div className='films'>
+    <div className="films">
       {films.map((film: any, index: React.Key | null | undefined) => {
-          return <FilmCard key={index} film={film} setUpdate={setUpdate} />;
-        })}
+        return <FilmCard key={index} film={film} setUpdate={setUpdate} />;
+      })}
     </div>
-  )
-}
+  );
+};
 
-export default FilmList
+export default FilmList;

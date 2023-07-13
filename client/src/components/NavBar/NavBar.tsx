@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { adminSelector } from "../../features/admin/adminSlise";
 import { getByCookie } from "../../features/admin/adminApi";
 import CloseIcon from "@mui/icons-material/Close";
+import Search from "../Search/Search";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -18,6 +19,10 @@ const NavBar = () => {
   const [adminDisp, setAdminDisp] = useState("none");
   const [logInOutDisp, setLogInOutDisp] = useState<boolean>(false);
   const [smallNav, setSmallNav] = useState(false);
+  const [ageSearch, setAgeSearch] = useState("0+");
+  const [genreSearch, setGenreSearch] = useState("all");
+  const [search, setSearch] = useState("");
+  const [newSearch, setNewSearch] = useState({search, ageSearch, genreSearch});
 
   async function handleSubmit(ev: any) {
     try {
@@ -79,14 +84,20 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="navBar" style={smallNav ? {opacity: "0.9"} : {}}>
+    <div className="navBar" style={smallNav ? { opacity: "0.9" } : {}}>
+      <h2 className="navBar__order">Order a ticket</h2>
+      <Search />
       <div className="navBar__icon">
         <MovieCreationTwoToneIcon className="navBar__cinemaIcon" />
-        <h2 className="navBar__icon__title__1">C</h2>
-        <h2 className="navBar__icon__title__2">nema</h2>
+        <h1 className="navBar__icon__title__1">C</h1>
+        <h1 className="navBar__icon__title__2">nema</h1>
       </div>
       <div className="navBar__btns">
-        <div className="navBar__btns__search"></div>
+        <div className="navBar__btns__search">
+          <h2>All Films</h2>
+          <h2>14+</h2>
+          <h2>18+</h2>
+        </div>
         <div className="navBar__btns__options">
           {!logInOutDisp ? (
             <PersonOutlineIcon
