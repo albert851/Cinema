@@ -8,11 +8,15 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { adminSelector } from "../../features/admin/adminSlise";
 import { getByCookie } from "../../features/admin/adminApi";
 import CloseIcon from "@mui/icons-material/Close";
+import { search } from "../../features/search/search";
 import Search from "../Search/Search";
+import Order from "../Order/Order";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const admin = useAppSelector(adminSelector);
+  const orderType = "navBarOrder";
+  const [orderDisp, setOrderDisp]= useState("block");
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -20,9 +24,8 @@ const NavBar = () => {
   const [logInOutDisp, setLogInOutDisp] = useState<boolean>(false);
   const [smallNav, setSmallNav] = useState(false);
   const [ageSearch, setAgeSearch] = useState("0+");
-  const [genreSearch, setGenreSearch] = useState("all");
-  const [search, setSearch] = useState("");
-  const [newSearch, setNewSearch] = useState({search, ageSearch, genreSearch});
+  const [genreeSearch, setGenreeSearch] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
 
   async function handleSubmit(ev: any) {
     try {
@@ -83,10 +86,24 @@ const NavBar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(searchValue)
+    dispatch(
+      search({
+        searchValue,
+        ageSearch,
+        genreeSearch,
+      })
+    );
+  }, [searchValue, genreeSearch, ageSearch]);
+
   return (
     <div className="navBar" style={smallNav ? { opacity: "0.9" } : {}}>
-      <h2 className="navBar__order">Order a ticket</h2>
-      <Search />
+      <h2 className="navBar__order" onClick={()=>setOrderDisp("block")}>Order a ticket</h2>
+      <Search
+        setSearchValue={setSearchValue}
+        setGenreeSearch={setGenreeSearch}
+      />
       <div className="navBar__icon">
         <MovieCreationTwoToneIcon className="navBar__cinemaIcon" />
         <h1 className="navBar__icon__title__1">C</h1>
@@ -94,9 +111,9 @@ const NavBar = () => {
       </div>
       <div className="navBar__btns">
         <div className="navBar__btns__search">
-          <h2>All Films</h2>
-          <h2>14+</h2>
-          <h2>18+</h2>
+          <h2 onClick={() => setAgeSearch("all")}>All Films</h2>
+          <h2 onClick={() => setAgeSearch("14+")}>14+</h2>
+          <h2 onClick={() => setAgeSearch("18+")}>18+</h2>
         </div>
         <div className="navBar__btns__options">
           {!logInOutDisp ? (
@@ -149,6 +166,7 @@ const NavBar = () => {
           </button>
         </form>
       </div>
+      <Order orderType={orderType} orderDisp={orderDisp}  setOrderDisp={setOrderDisp} />
     </div>
   );
 };

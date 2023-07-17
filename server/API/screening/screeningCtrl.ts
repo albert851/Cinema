@@ -27,6 +27,7 @@ export async function createScreening(
 export async function getAllScreenings(req, res) {
   try {
     const screeningDB = await ScreeningModel.find();
+    // const screeningDB = await ScreeningModel.find().populate("filmId");
     // const screeningDB = await ScreeningModel.find({"filmId": filmId});
     res.send({ screeningDB });
   } catch (error) {

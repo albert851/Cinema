@@ -8,8 +8,9 @@
   display: flex;
   justify-content: space-around;
   position: sticky;
-  top: 1px;
+  top: 2px;
   transition: all 2s ease-in-out;
+  z-index: 5;
   
   .navBar__order{
     background-color: rgba(246, 15, 15, 0.805);

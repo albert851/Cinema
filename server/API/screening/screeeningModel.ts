@@ -1,11 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import FilmModel from "../film/filmModel";
 
 const ScreeningSchema = new mongoose.Schema({
-    filmId: String,
-    dayId: String,
-    day: String,
-    time: String,
-    seats: [Boolean],
+  filmId: String,
+//   filmId: { type: Schema.Types.ObjectId, ref: FilmModel },
+  dayId: String,
+  day: String,
+  time: String,
+  seats: [Boolean],
 });
 
 const ScreeningModel = mongoose.model("screening", ScreeningSchema);

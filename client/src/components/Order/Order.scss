@@ -1,0 +1,105 @@
+.navBarOrder {
+  position: absolute;
+  padding: 10px;
+  width: 800px;
+  height: 500px;
+  background-color: rgba(205, 233, 253, 0.848);
+  top: 105px;
+  left: 10%;
+  border-radius: 0 10px 10px 10px;
+
+  .navBarOrder__form {
+    width: 100%;
+
+    .form__select {
+      display: flex;
+      gap: 20px;
+      justify-content: space-around;
+      .form__dayOption__select {
+        width: 40%;
+        height: 40px;
+        background-color: rgb(141, 167, 185);
+        color: rgb(62, 1, 106);
+        border: 0;
+        border-radius: 10px;
+        font-size: large;
+      }
+    }
+
+    .form__films {
+      margin-top: 20px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      gap: 10px;
+
+      .form__films__list {
+        width: 60%;
+        height: 400px;
+      }
+
+      .form__films__pic {
+        width: 40%;
+        height: 400px;
+      }
+    }
+  }
+}
+
+.homeOrder{
+  position: absolute;
+  opacity: 90%;
+  padding: 10px;
+  width: 1000px;
+  height: 250px;
+  background-color: rgb(231,33,65);
+  top: 270px;
+  left: 16%;
+  border-radius: 10px 10px 10px 10px;
+
+  .homeOrder__form{
+    width: 100%;
+    display: flex;
+    
+    .form__select {
+      width: 30%;
+      padding: 10px;
+
+      h1{
+        color: rgb(62, 1, 106);
+        margin-top: 10px;
+      }
+
+      .form__dayOption__select {
+        margin-bottom: 20px;
+        width: 100%;
+        height: 40px;
+        background-color: rgb(141, 167, 185);
+        color: rgb(62, 1, 106);
+        border: 0;
+        border-radius: 10px;
+        font-size: large;
+      }
+    }
+  }
+
+  .form__films {
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+
+    .form__films__list {
+      width: 60%;
+      height: 100%;
+      background-color: aliceblue;
+    }
+
+    .form__films__pic {
+      width: 40%;
+      height: 100%;
+      background-color: aliceblue;
+    }
+  }
+}

@@ -3,20 +3,21 @@ import { adminSelector } from "../../features/admin/adminSlise";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { changeFilm } from "../../features/film/selectedFilm";
-import { error } from "console";
+import { Console, error } from "console";
 import axios from "axios";
+import { FilmsType } from "../../types/films";
 
 interface FilmCardProps {
-  film: any;
+  film: FilmsType;
   setUpdate: CallableFunction;
 }
 
 const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
-  const [pic, setPic] = useState<string>();
-  const [title, setTitle] = useState<string>();
-  const [summary, setSummary] = useState<string>();
-  const [filmId, setFilmId] = useState<string>();
-  const [ageRestriction, setAgeRestriction] = useState<string>();
+  const [pic, setPic] = useState<string>(film.pic);
+  const [title, setTitle] = useState<string>(film.title);
+  const [summary, setSummary] = useState<string>(film.summary);
+  const [filmId, setFilmId] = useState<string>(film._id);
+  const [ageRestriction, setAgeRestriction] = useState<string>(film.age == "14+" || film.age == "18+" ? film.age : "");
   const admin = useAppSelector(adminSelector);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -46,21 +47,24 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleFilmPage = () => {
+    navigate(`/film/${filmId}`)
   }
 
-  useEffect(() => {
-    setPic(film.pic);
-    setTitle(film.title);
-    setSummary(film.summary);
-    setFilmId(film._id);
-    if (film.age == "14+" || film.age == "18+") {
-      setAgeRestriction(film.age);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // setPic(film.pic);
+  //   // setTitle(film.title);
+  //   // setSummary(film.summary);
+  //   // setFilmId(film._id);
+  //   if (film.age == "14+" || film.age == "18+") {
+  //     setAgeRestriction(film.age);
+  //   }
+  // }, []);
 
   return (
-    // <div className={film === "header" ? "header_film" : film === "main" ? "main" : "card"}>
-    <div className = "film">
+    <div className="film">
       <span className="film__description">
         <h2 className="film__description__titele">{title}</h2>
         <h3 className="film__description__summary">{summary}</h3>
@@ -82,7 +86,12 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
         ) : (
           <div className="film__description__buttons">
             <button className="description__buttons__btn">Order</button>
-            <button className="description__buttons__btn">Film Page</button>
+            <button
+              className="description__buttons__btn"
+              onClick={handleFilmPage}
+            >
+              Film Page
+            </button>
           </div>
         )}
       </span>

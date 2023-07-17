@@ -16,16 +16,23 @@ const UpdateFilm: FC<FilmUpdateProps> = ({ setUpdate }) => {
   const [age, setAge] = useState<string>();
   const [pic, setPic] = useState<string>();
   const [summary, setSummary] = useState<string>();
-  const film = useAppSelector(filmSelector)
+  const film = useAppSelector(filmSelector);
   const dispatch = useAppDispatch();
 
   async function handleUpdateFilm(ev: any) {
     ev.preventDefault();
 
     try {
-      const { data } = await axios.patch(`/api/film/update/${filmId}`, { title, genree, cast, age, pic, summary });
+      const { data } = await axios.patch(`/api/film/update/${filmId}`, {
+        title,
+        genree,
+        cast,
+        age,
+        pic,
+        summary,
+      });
 
-      if(data){
+      if (data) {
         window.location.reload();
       }
     } catch (error) {
@@ -41,7 +48,7 @@ const UpdateFilm: FC<FilmUpdateProps> = ({ setUpdate }) => {
     setAge(film.age);
     setPic(film.pic);
     setSummary(film.summary);
-  }
+  };
 
   useEffect(() => {
     handleSetFilmData();
