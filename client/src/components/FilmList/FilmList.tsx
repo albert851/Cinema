@@ -7,55 +7,13 @@ import { FilmsType } from "../../types/films";
 
 interface FilmListProps {
   setUpdate: CallableFunction;
+  films: FilmsType[],
+  filmsToDisp: FilmsType[]
 }
 
-const FilmList: FC<FilmListProps> = ({ setUpdate }) => {
-  const [films, setFilms] = useState<FilmsType[]>([]);
-  const [filmsToDisp, setFilmsToDisp] = useState<FilmsType[]>([])
+const FilmList: FC<FilmListProps> = ({ setUpdate, films, filmsToDisp }) => {
   const dispatch = useAppDispatch();
   const search = useAppSelector(searchSelector)
-
-  async function handleGetFilms() {
-    try {
-      const { data } = await axios.get("/api/film/allFilms");
-
-      if (data) {
-        setFilms(data.filmsDB);
-        setFilmsToDisp(data.filmsDB)
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const handleSearch = () => {
-    const regex = new RegExp(`^${search.searchValue}`, "i");
-    
-    let newFilmArr = films.filter((e) => e.title.match(regex));
-
-    if(search.ageSearch != "all")
-    if(search.ageSearch != "0+") {
-      if(search.ageSearch == "14+"){
-        newFilmArr = newFilmArr.filter((e:FilmsType) => e.age !== "0+");
-      } else {
-        newFilmArr = newFilmArr.filter((e:FilmsType) => e.age == search.ageSearch);
-      }
-    } 
-    if(search.genreeSearch != "all") {
-      newFilmArr = newFilmArr.filter((e) => e.genree.includes(`${search.genreeSearch}`));
-    }
-    
-    console.log(newFilmArr)
-    setFilmsToDisp(newFilmArr)
-  }
-
-  useEffect(() => {
-    handleGetFilms();
-  }, []);
-
-  useEffect(() => {
-    handleSearch();
-  }, [search]);
 
   return (
     <div className="films">

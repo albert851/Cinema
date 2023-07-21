@@ -3,6 +3,9 @@ import { FilmsType } from "../../types/films";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import { FilmsToOrderType } from "../../types/filmToOrder";
+import { useNavigate } from "react-router-dom";
+import FilmList from "./../FilmList/FilmList";
+import { Value } from 'sass';
 
 interface OrderProps {
   orderType: string;
@@ -14,89 +17,61 @@ const Order: FC<OrderProps> = ({ orderType, orderDisp, setOrderDisp }) => {
   const [daySelected, setDaySeleted] = useState<string>();
   const [films, setFilms] = useState<FilmsType[]>();
   const [filmsList, setFilmsList] = useState<FilmsToOrderType[]>([]);
-  const [filterdFilms, setFilterdFilms] = useState<FilmsType[]>();
-  const [filmsByDay, setFilmsByDay] = useState<FilmsType>();
+  const [filterdFilms, setFilterdFilms] = useState<FilmsToOrderType[]>([]);
   const [option, setOption] = useState<string>();
+  const [filmOrder, setFilmOrder] = useState<FilmsToOrderType[]>([]);
+  const [pic, setPic] = useState<string>();
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {};
-
-  const handleDay = (ev: React.ChangeEvent<HTMLSelectElement>) => {
-    setDaySeleted(ev.target.value);
-  };
-
-  const handleOption = (ev: React.ChangeEvent<HTMLSelectElement>) => {
-    setOption(ev.target.value)
-  };
-
-  async function handleGetFilms() {
+  const handleClick = (ev: any) => {
     try {
-      const { data } = await axios.get("/api/film/allFilms");
-
-      if (data) {
-        setFilms(data.filmsDB);
-        setFilterdFilms(data.filmsDB)
-      }
+      setOrderDisp("none")
+      navigate(`/order/${ev.target.id}`);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  const handleCreateFilmsList = () => {
-    films?.map((e) => {
-      let id = e._id;
-      let title = e.title;
-      let genree = e.genree;
+  const handleDay = async () => {
+    try {
+      const { data } = await axios.get(`/api/screening/${daySelected}`);
+      setFilmsList(data.screeningsDB);
+      setFilterdFilms(data.screeningsDB);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-      e.screeningTimes.map((d) => {
-        let day = d.day;
-        let dayId = d._id;
-        d.times.map((t) => {
-          let time = t;
+  const handleOption = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterdFilms(
+      filmsList.filter((e) => e.filmId.genree.includes(ev.target.value))
+    );
+  };
 
-          setFilmsList([...filmsList, {id, title, genree, day, dayId, time}])
-        })
-      })
-    })
-  }
-
-  const filmsBySelectedDay = () => {
-    console.log(filmsList)
+  const daySelect = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+    setDaySeleted(ev.target.value);
   };
 
   useEffect(() => {
-    handleGetFilms();
-  }, []);
-
-  useEffect(() => {
-    handleCreateFilmsList();
-  }, [films]);
-
-  useEffect(() => {
-    if(option == ""){
-      setFilterdFilms(films)
-    } else {
-      if(option){
-        setFilterdFilms(films?.filter((e) => e.genree.includes(option)))
-      }
-    }
-  }, [option]);
-
-  useEffect(() => {
-    filmsBySelectedDay();
+    handleDay();
   }, [daySelected]);
 
   return (
     <div className={orderType} style={{ display: orderDisp }}>
-      {(orderType=="navBarOrder") ? <CloseIcon
-        className={`${orderType}__close`}
-        onClick={() => setOrderDisp("none")}
-      /> : <></>}
-      <form className={`${orderType}__form`} onSubmit={handleSubmit}>
+      {orderType == "navBarOrder" ? (
+        <CloseIcon
+          className={`${orderType}__close`}
+          onClick={() => setOrderDisp("none")}
+        />
+      ) : (
+        <></>
+      )}
+      <form className={`${orderType}__form`}>
         <div className="form__select">
-          {(orderType=="homeOrder") ? <h1>Order a ticket</h1> : <></>}
+          {orderType == "homeOrder" ? <h1>Order a ticket</h1> : <></>}
           <select
             value={daySelected}
-            onChange={handleDay}
+            onChange={daySelect}
             className="form__dayOption__select"
           >
             <option value={""}>Day</option>
@@ -120,8 +95,19 @@ const Order: FC<OrderProps> = ({ orderType, orderDisp, setOrderDisp }) => {
           </select>
         </div>
         <div className="form__films">
-          <div className="form__films__list"></div>
-          <div className="form__films__pic"></div>
+          <div className="form__films__list">
+            {filterdFilms.map((e) => (
+              <h3
+                className="films__list__filmTime"
+                onClick={handleClick}
+                onMouseMove={() => setPic(e.filmId.pic)}
+                id={e._id}
+              >{`${e.time}:  ${e.filmId.title}`}</h3>
+            ))}
+          </div>
+          <div className="form__films__pic">
+            <img className="films__pic__img" src={pic}></img>
+          </div>
         </div>
       </form>
     </div>

@@ -31,10 +31,17 @@ export async function getAllFilms(req, res) {
   }
 }
 
+export async function getFilmById(req, res) {
+  try {
+    const filmsDB = await FilmModel.findById(req.params.id);
+    res.send({ filmsDB });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+}
+
 export async function updateFilm(req, res) {
   try {
-    console.log("hi")
-    
     const { title, genree, cast, age, pic, screeningTimes, summary } = req.body;
     const filmDB = await FilmModel.findByIdAndUpdate(
       req.params.id,

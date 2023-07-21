@@ -7,8 +7,14 @@ import { adminSelector } from "../../features/admin/adminSlise";
 import { getByCookie } from "../../features/admin/adminApi";
 import { useNavigate } from "react-router-dom";
 import UpdateFilm from "../../components/UpdateFilm/UpdateFilm";
+import { FilmsType } from "../../types/films";
 
-function Admin() {
+interface AdminProps {
+  films: FilmsType[],
+  filmsToDisp: FilmsType[]
+}
+
+const Admin:FC<AdminProps> = ({films, filmsToDisp}) => {
   const navigate = useNavigate();
   const admin = useAppSelector(adminSelector);
   const dispatch = useAppDispatch();
@@ -26,7 +32,7 @@ function Admin() {
   return (
     <div className="admin">
       {update? <UpdateFilm setUpdate={setUpdate}/> : <AddFilm />}
-      <FilmList setUpdate={setUpdate}/>
+      <FilmList setUpdate={setUpdate} films={films} filmsToDisp={filmsToDisp}/>
     </div>
   );
 }

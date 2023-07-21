@@ -7,7 +7,6 @@ const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
 
-// app.use(express.static("public"));
 app.use(express.json());
 
 mongoose.set('strictQuery', true);
@@ -22,7 +21,6 @@ mongoose.connect(mongo_url).then(res => {
 });
 
 app.use(express.json());
-// app.use(express.static("public"));
 app.use(cookieParser());
 
 import adminRoutes from "./API/admin/adminRoutes";
@@ -33,6 +31,10 @@ app.use("/api/film", filmRoutes);
 
 import screeningRoutes from "./API/screening/screeningRoutes";
 app.use("/api/screening", screeningRoutes);
+
+import seatsRoutes from "./API/seats/seatsRoutes";
+app.use("/api/seats", seatsRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`server is running on porrt: ${PORT}`)

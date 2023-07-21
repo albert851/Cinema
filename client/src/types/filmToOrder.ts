@@ -1,8 +1,10 @@
+import { FilmsType } from "./films";
+
 export interface FilmsToOrderType {
-    id: string,
-    title: string,
-    genree: string,
     day: string,
     dayId: string,
+    _id: string,
+    filmId: FilmsType,
+    seats: boolean[],
     time: string
 }

@@ -2,17 +2,20 @@ import express from "express";
 import {
     createScreening,
     deleteAllScreeningsByFilmId,
-    getAllScreenings
+    getAllScreenings,
+    getScreeningById,
+    getScreeningByDay,
+    updateScreaning
 } from "./screeningCtrl";
 
 const router = express.Router();
     
-router //.post("", createScreening)
+router
     .post("/newScreening", createScreening)
-    //.get("", get-all-screenings)
-    //.patch("/:screeingid)
     .get("/allScreenings", getAllScreenings)
-    //.get("/:screeingid", getScreeningBYId)
+    .get("/:day", getScreeningByDay)
+    .get("/time/:id", getScreeningById)
+    .patch("/:id", updateScreaning)
     .delete("/film/:filmId", deleteAllScreeningsByFilmId)
 
 export default router;

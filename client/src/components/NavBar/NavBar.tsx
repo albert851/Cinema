@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, FC } from "react";
 import MovieCreationTwoToneIcon from "@mui/icons-material/MovieCreationTwoTone";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -11,12 +11,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import { search } from "../../features/search/search";
 import Search from "../Search/Search";
 import Order from "../Order/Order";
+import { FilmsType } from "../../types/films";
 
-const NavBar = () => {
+interface NavbarProps {
+  films: FilmsType[];
+  filmsToDisp: FilmsType[];
+  setFilmsToDisp: CallableFunction;
+}
+
+const NavBar: FC<NavbarProps> = ({ films, filmsToDisp, setFilmsToDisp }) => {
   const navigate = useNavigate();
   const admin = useAppSelector(adminSelector);
   const orderType = "navBarOrder";
-  const [orderDisp, setOrderDisp]= useState("block");
+  const [orderDisp, setOrderDisp] = useState("none");
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -65,6 +72,21 @@ const NavBar = () => {
     }
   };
 
+  const handleSearch = () => {
+    // let newFilmArr: FilmsType[];
+
+    // if(ageSearch == "all"){
+    //   newFilmArr = films;
+    // }
+    // else if(ageSearch == "14+") {
+
+    // }
+    // const regex = new RegExp(`^${searchValue}`, "i");
+
+    // const newFilmArr = films.filter((e) => e.title.match(regex));
+    // setFilmsToDisp(newFilmArr);
+  };
+
   useEffect(() => {
     dispatch(getByCookie());
   }, []);
@@ -87,19 +109,18 @@ const NavBar = () => {
   }, []);
 
   useEffect(() => {
-    console.log(searchValue)
-    dispatch(
-      search({
-        searchValue,
-        ageSearch,
-        genreeSearch,
-      })
-    );
+    handleSearch();
   }, [searchValue, genreeSearch, ageSearch]);
 
   return (
     <div className="navBar" style={smallNav ? { opacity: "0.9" } : {}}>
-      <h2 className="navBar__order" onClick={()=>setOrderDisp("block")}>Order a ticket</h2>
+      {!logInOutDisp ? (
+        <h2 className="navBar__order" onClick={() => setOrderDisp("block")}>
+          Order a ticket
+        </h2>
+      ) : (
+        <></>
+      )}
       <Search
         setSearchValue={setSearchValue}
         setGenreeSearch={setGenreeSearch}
@@ -166,7 +187,11 @@ const NavBar = () => {
           </button>
         </form>
       </div>
-      <Order orderType={orderType} orderDisp={orderDisp}  setOrderDisp={setOrderDisp} />
+      <Order
+        orderType={orderType}
+        orderDisp={orderDisp}
+        setOrderDisp={setOrderDisp}
+      />
     </div>
   );
 };

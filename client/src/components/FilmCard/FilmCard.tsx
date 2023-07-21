@@ -13,10 +13,6 @@ interface FilmCardProps {
 }
 
 const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
-  const [pic, setPic] = useState<string>(film.pic);
-  const [title, setTitle] = useState<string>(film.title);
-  const [summary, setSummary] = useState<string>(film.summary);
-  const [filmId, setFilmId] = useState<string>(film._id);
   const [ageRestriction, setAgeRestriction] = useState<string>(film.age == "14+" || film.age == "18+" ? film.age : "");
   const admin = useAppSelector(adminSelector);
   const navigate = useNavigate();
@@ -39,7 +35,7 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
 
   async function handleDeleteFilm() {
     try {
-      const { data } = await axios.delete(`/api/film/${filmId}`);
+      const { data } = await axios.delete(`/api/film/${film._id}`);
 
       if (data) {
         window.location.reload();
@@ -50,24 +46,14 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
   };
 
   const handleFilmPage = () => {
-    navigate(`/film/${filmId}`)
+    navigate(`/film/${film._id}`)
   }
-
-  // useEffect(() => {
-  //   // setPic(film.pic);
-  //   // setTitle(film.title);
-  //   // setSummary(film.summary);
-  //   // setFilmId(film._id);
-  //   if (film.age == "14+" || film.age == "18+") {
-  //     setAgeRestriction(film.age);
-  //   }
-  // }, []);
 
   return (
     <div className="film">
       <span className="film__description">
-        <h2 className="film__description__titele">{title}</h2>
-        <h3 className="film__description__summary">{summary}</h3>
+        <h2 className="film__description__titele">{film.title}</h2>
+        <h3 className="film__description__summary">{film.summary}</h3>
         {admin ? (
           <div className="film__description__buttons">
             <button
@@ -95,7 +81,7 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
           </div>
         )}
       </span>
-      <img className="film__pic" src={pic}></img>
+      <img className="film__pic" src={film.pic}></img>
       {ageRestriction ? (
         <div className="film__pic__ageRestriction">
           <h3>{ageRestriction}</h3>

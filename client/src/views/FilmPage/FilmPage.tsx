@@ -11,15 +11,28 @@ const FilmPage = () => {
 
   const handleGetMovie = async () => {
     try {
-      const { data } = await axios.get(`/api/movies/${id}`);
+      const { data } = await axios.get(`/api/film/oneFilm/${id}`);
 
-      setFilm(data.filmDB);
+      setFilm(data.filmsDB);
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {}, []);
+  const getScreenings = async () => {
+    try {
+      const { data } = await axios.get(`/api/screening/allScreenings`);
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetMovie()
+    getScreenings();
+  }, []);
 
   useEffect(() => {
     if (film) {
@@ -32,17 +45,18 @@ const FilmPage = () => {
   }, [film]);
 
   return (
-    <div className="film">
-      {/* <div className="film__data">
-        <h1>{film.title}</h1>
-        <h2>{`Genree: ${film.genree}`}</h2>
-        <h2>{`Cast: ${film.cast}`}</h2>
-        <h2>{`Director: ${film.director}`}</h2>
-        <h2 className="film__data__age">{age}</h2>
+    <div className="filmPage">
+      <div className="filmPage__data">
+        <h1>{film?.title}</h1>
+        <h2>{`Genree: ${film?.genree}`}</h2>
+        <h2>{`Cast: ${film?.cast}`}</h2>
+        <h2>{`Director: ${film?.director}`}</h2>
+        <h2 className="filmPage__data__age">{age}</h2>
+        <h3>{film?.summary}</h3>
       </div>
-      <div className="film__pic">
-        <img className="film__pic__img" src={film.pic}></img>
-      </div> */}
+      <div className="filmPage__pic">
+        <img className="filmPage__pic__img" src={film?.pic}></img>
+      </div>
     </div>
   );
 };
