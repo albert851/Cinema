@@ -5,6 +5,7 @@ import {
     getAllScreenings,
     getScreeningById,
     getScreeningByDay,
+    getScreeningByFilmId,
     updateScreaning
 } from "./screeningCtrl";
 
@@ -15,6 +16,7 @@ router
     .get("/allScreenings", getAllScreenings)
     .get("/:day", getScreeningByDay)
     .get("/time/:id", getScreeningById)
+    .get("/film/:id", getScreeningByFilmId)
     .patch("/:id", updateScreaning)
     .delete("/film/:filmId", deleteAllScreeningsByFilmId)
 

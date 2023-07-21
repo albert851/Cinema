@@ -26,9 +26,7 @@ export async function createScreening(
 
 export async function getAllScreenings(req, res) {
   try {
-    // const screeningDB = await ScreeningModel.find();
     const screeningDB = await ScreeningModel.find().populate("filmId");
-    // const screeningDB = await ScreeningModel.find({"filmId": filmId});
     res.send({ screeningDB });
   } catch (error) {
     res.status(500).send({ error: error.message });
@@ -54,9 +52,17 @@ export async function getScreeningById(req, res) {
   }
 }
 
+export async function getScreeningByFilmId(req, res) {
+  try {
+    const sreeningsDB = await ScreeningModel.find(req.params.id).populate("filmId");
+    res.send({ sreeningsDB });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+}
+
 export async function deleteAllScreeningsByFilmId(filmId) {
   try {
-    // const { filmId } = req.params;
     if (!filmId)
       throw new Error(
         "no film Id on deleteAllScreeningsByFilmId, at screeningCtrl"
@@ -65,14 +71,12 @@ export async function deleteAllScreeningsByFilmId(filmId) {
     const deleteScreeiningDB = await ScreeningModel.deleteMany({ filmId });
     console.log(deleteScreeiningDB);
     if (deleteScreeiningDB.deletedCount != 0) {
-      // res.send({ deleteScreeiningDB, ok: true });
       return true
     } else {
       throw new Error("no screeing was deleted");
     }
   } catch (error) {
     console.log(error);
-    // res.status(500).send({ error: error.message });
     return false
   }
 }

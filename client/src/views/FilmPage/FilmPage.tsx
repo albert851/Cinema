@@ -7,8 +7,19 @@ const FilmPage = () => {
   const [age, setAge] = useState<string>();
   const [film, setFilm] = useState<FilmsType>();
   const [day, setDay] = useState("");
+  const [times, setTimes] = useState<string[]>();
 
   const { id } = useParams();
+
+  const handleGetSreenings = async () => {
+    try {
+      const { data } = await axios.get(`/api/screening/film/${film?._id}`);
+
+      console.log(data)
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleGetMovie = async () => {
     try {
@@ -32,6 +43,16 @@ const FilmPage = () => {
     setDay(ev.target.value);
   };
 
+  const handleTimes = () => {
+    film?.screeningTimes.map((e) => {
+      if (e.day === day) {
+        setTimes(e.times);
+      }
+    });
+
+    console.log(times);
+  };
+
   useEffect(() => {
     handleGetMovie();
     getScreenings();
@@ -47,6 +68,10 @@ const FilmPage = () => {
     }
   }, [film]);
 
+  useEffect(() => {
+    handleTimes();
+  }, [day]);
+
   return (
     <div className="filmPage">
       <div className="filmPage__data">
@@ -59,11 +84,21 @@ const FilmPage = () => {
         <select
           value={day}
           onChange={handleDaySelect}
-          className="filmPage__daySelect"
+          className="filmPage__data__daySelect"
         >
           <option value={""}>Day</option>
           {film?.screeningTimes.map((e) => (
             <option value={`${e.day}`}>{e.day}</option>
+          ))}
+        </select>
+        <select
+          value={day}
+          // onChange={handleDaySelect}
+          className="filmPage__data__daySelect"
+        >
+          <option value={""}>Time</option>
+          {times?.map((e) => (
+            <option value={`${e}`}>{e}</option>
           ))}
         </select>
       </div>
