@@ -10,12 +10,16 @@
         width: 65%;
 
         .filmPage__data__age{
-            width: 50px;
+            width: 55px;
             border: 3px solid rgb(62, 1, 106);
             color: red;
         }
 
         h3{margin-top: 50px;}
+
+        .filmPage__daySelect{
+            width: 40px;
+        }
     }
 
     .filmPage__pic{

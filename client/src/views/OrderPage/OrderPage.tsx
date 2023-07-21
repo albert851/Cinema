@@ -3,34 +3,50 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FilmsToOrderType } from "../../types/filmToOrder";
 import Order from "./../../components/Order/Order";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {
   const { id } = useParams();
   const [screening, setScreening] = useState<FilmsToOrderType>();
-  const [seats, setSeats] = useState<boolean[]>(Array(100).fill(false));
+  const [prevSeats, setPrevSeats] = useState<boolean[]>();
+  const [seats, setSeats] = useState<boolean[]>();
   const [seatIndexes, setSeatIndexes] = useState<number[]>([]);
   const [email, setEmail] = useState();
   const [order, setOrder] = useState();
+  const [orderNot, setOrderNot] = useState(false);
+  const navigate = useNavigate();
 
   const handleScreening = async () => {
     try {
       const { data } = await axios.get(`/api/screening/time/${id}`);
-      setScreening(data.sreeningsDB);
+
+      if (data) {
+        setScreening(data.sreeningsDB);
+
+        setSeats(data.sreeningsDB.seats);
+        setPrevSeats(data.sreeningsDB.seats);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleCoiseSeat = (ev: any) => {
-    const newArr = seats.map((e, idx) => {
-      if (idx == ev.target.id) {
-        return !e;
-      } else {
-        return e;
+    if (prevSeats) {
+      if (seats) {
+        const prevArr = prevSeats;
+        const newArr = seats.map((e, idx) => {
+          if (prevArr[idx] == true) {
+            return true;
+          } else if (idx == ev.target.id) {
+            return !e;
+          } else {
+            return e;
+          }
+        });
+        setSeats(newArr);
       }
-    });
-
-    setSeats(newArr);
+    }
   };
 
   const handleSubmit = async (ev: any) => {
@@ -59,7 +75,7 @@ const OrderPage = () => {
       });
 
       if (data) {
-        window.location.reload();
+        setOrderNot(true);
       }
     } catch (error) {
       console.error(error);
@@ -67,13 +83,24 @@ const OrderPage = () => {
   };
 
   const handleNewSeats = () => {
-    seats.map((e, idx) => {
-      if (e == true) {
-        const index = idx + 1;
+    if (prevSeats) {
+      const prevArr = prevSeats;
 
-        handlePostSeats(index);
-      }
-    });
+      seats?.map((e, idx) => {
+        if (prevArr[idx] == false) {
+          if (e == true) {
+            const index = idx + 1;
+
+            handlePostSeats(index);
+          }
+        }
+      });
+    }
+  };
+
+  const handleOrderConfirmed = () => {
+    setOrderNot(false);
+    navigate(`/`);
   };
 
   useEffect(() => {
@@ -103,7 +130,7 @@ const OrderPage = () => {
         <div className="container__seats">
           <div className="container__seats__screen"></div>
           <div className="container__seats__choice">
-            {seats.map((e, idx) => (
+            {seats?.map((e, idx) => (
               <div
                 className="choice__seat"
                 id={`${idx}`}
@@ -118,22 +145,34 @@ const OrderPage = () => {
           </div>
         </div>
       </div>
-      <form className="orderPage__form" onSubmit={handleSubmit}>
-        <h2>Enter email to order:</h2>
-        <input
-          className="orderPage__form__input"
-          value={email}
-          type="email"
-          placeholder="email"
-          // required
-          onInput={(ev: any) => {
-            setEmail(ev.target.value);
-          }}
-        />
-        <button className="orderPage__form__submit" type="submit">
-          Order
-        </button>
-      </form>
+      {!orderNot ? (
+        <form className="orderPage__form" onSubmit={handleSubmit}>
+          <h2>Enter email to order:</h2>
+          <input
+            className="orderPage__form__input"
+            value={email}
+            type="email"
+            placeholder="email"
+            // required
+            onInput={(ev: any) => {
+              setEmail(ev.target.value);
+            }}
+          />
+          <button className="orderPage__form__submit" type="submit">
+            Order
+          </button>
+        </form>
+      ) : (
+        <div className="orderPage__note">
+          <h2>Your order has been confirmed</h2>
+          <button
+            className="orderPage__note__btn"
+            onClick={handleOrderConfirmed}
+          >
+            OK
+          </button>
+        </div>
+      )}
     </div>
   );
 };

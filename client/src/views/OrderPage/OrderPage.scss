@@ -1,7 +1,7 @@
 .orderPage {
   background-color: rgba(205, 233, 253, 0.848);
   padding: 10px;
-  height: 120vh;
+  height: 125vh;
 
   h1 {
     color: rgb(62, 1, 106);
@@ -81,6 +81,32 @@
     }
 
     .orderPage__form__submit {
+      width: 100px;
+      height: 40px;
+      font-size: medium;
+      margin-top: 20px;
+      border-radius: 5px;
+      background-color: rgb(62, 1, 106);
+      color: whitesmoke;
+      border: 0px;
+
+      &:hover {
+        border: 1px solid rgb(222, 189, 236);
+      }
+    }
+  }
+
+  .orderPage__note{
+    display: flex;
+    margin-left: 30px;
+    margin-top: 30px;
+    gap: 15px;
+
+    h2{
+      color: rgb(62, 1, 106);
+    }
+
+    .orderPage__note__btn{
       width: 100px;
       height: 40px;
       font-size: medium;

@@ -6,6 +6,7 @@ import axios from "axios";
 const FilmPage = () => {
   const [age, setAge] = useState<string>();
   const [film, setFilm] = useState<FilmsType>();
+  const [day, setDay] = useState("");
 
   const { id } = useParams();
 
@@ -22,15 +23,17 @@ const FilmPage = () => {
   const getScreenings = async () => {
     try {
       const { data } = await axios.get(`/api/screening/allScreenings`);
-
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleDaySelect = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+    setDay(ev.target.value);
+  };
+
   useEffect(() => {
-    handleGetMovie()
+    handleGetMovie();
     getScreenings();
   }, []);
 
@@ -53,6 +56,16 @@ const FilmPage = () => {
         <h2>{`Director: ${film?.director}`}</h2>
         <h2 className="filmPage__data__age">{age}</h2>
         <h3>{film?.summary}</h3>
+        <select
+          value={day}
+          onChange={handleDaySelect}
+          className="filmPage__daySelect"
+        >
+          <option value={""}>Day</option>
+          {film?.screeningTimes.map((e) => (
+            <option value={`${e.day}`}>{e.day}</option>
+          ))}
+        </select>
       </div>
       <div className="filmPage__pic">
         <img className="filmPage__pic__img" src={film?.pic}></img>

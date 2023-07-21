@@ -13,7 +13,9 @@ interface FilmCardProps {
 }
 
 const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
-  const [ageRestriction, setAgeRestriction] = useState<string>(film.age == "14+" || film.age == "18+" ? film.age : "");
+  const [ageRestriction, setAgeRestriction] = useState<string>(
+    film.age == "14+" || film.age == "18+" ? film.age : ""
+  );
   const admin = useAppSelector(adminSelector);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -43,11 +45,11 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
   const handleFilmPage = () => {
-    navigate(`/film/${film._id}`)
-  }
+    navigate(`/film/${film._id}`);
+  };
 
   return (
     <div className="film">
