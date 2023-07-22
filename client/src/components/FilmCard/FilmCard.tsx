@@ -19,6 +19,7 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
   const admin = useAppSelector(adminSelector);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [order, setOrder] = useState(false)
 
   const handleUpdateFilm = () => {
     dispatch(
@@ -71,9 +72,11 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
               Delete Film
             </button>
           </div>
-        ) : (
+        ) : ( 
           <div className="film__description__buttons">
-            <button className="description__buttons__btn">Order</button>
+            <button className="description__buttons__btn" onClick={() => setOrder(true)}>
+              Order
+            </button>
             <button
               className="description__buttons__btn"
               onClick={handleFilmPage}

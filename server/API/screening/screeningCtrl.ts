@@ -54,7 +54,10 @@ export async function getScreeningById(req, res) {
 
 export async function getScreeningByFilmId(req, res) {
   try {
-    const sreeningsDB = await ScreeningModel.find(req.params.id).populate("filmId");
+    const filmId = req.params.id
+
+    console.log({ filmId })
+    const sreeningsDB = await ScreeningModel.find({ filmId }).populate("filmId");;
     res.send({ sreeningsDB });
   } catch (error) {
     res.status(500).send({ error: error.message });
