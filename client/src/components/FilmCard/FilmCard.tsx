@@ -6,6 +6,7 @@ import { changeFilm } from "../../features/film/selectedFilm";
 import { Console, error } from "console";
 import axios from "axios";
 import { FilmsType } from "../../types/films";
+import Order2 from "../Order2/Order2";
 
 interface FilmCardProps {
   film: FilmsType;
@@ -19,7 +20,7 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
   const admin = useAppSelector(adminSelector);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [order, setOrder] = useState(false)
+  const [order, setOrder] = useState(false);
 
   const handleUpdateFilm = () => {
     dispatch(
@@ -72,17 +73,26 @@ const FilmCard: FC<FilmCardProps> = ({ film, setUpdate }) => {
               Delete Film
             </button>
           </div>
-        ) : ( 
+        ) : (
           <div className="film__description__buttons">
-            <button className="description__buttons__btn" onClick={() => setOrder(true)}>
-              Order
-            </button>
-            <button
-              className="description__buttons__btn"
-              onClick={handleFilmPage}
-            >
-              Film Page
-            </button>
+            {order ? (
+              <Order2 filmId={film._id || ""} classType="CardOrder" setOrderDisp={setOrder} />
+            ) : (
+              <div className="film__description__conteiner">
+                <button
+                  className="description__buttons__btn"
+                  onClick={() => setOrder(true)}
+                >
+                  Order
+                </button>
+                <button
+                  className="description__buttons__btn"
+                  onClick={handleFilmPage}
+                >
+                  Film Page
+                </button>
+              </div>
+            )}
           </div>
         )}
       </span>

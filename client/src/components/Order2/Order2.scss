@@ -11,3 +11,25 @@
         margin-left: 50px;
       }
 }
+
+.CardOrder{
+  width: 100%;
+
+  .classType__close{
+    color: rgb(62, 1, 106);
+    background-color: rgb(141, 167, 185);
+    margin-left: 80%;
+  }
+
+  .CardOrder__select {
+      margin-right: 5%;
+      margin-bottom: 10px;
+      width: 130px;
+      height: 40px;
+      background-color: rgb(141, 167, 185);
+      color: rgb(62, 1, 106);
+      border: 0;
+      border-radius: 10px;
+      font-size: large;
+    }
+}

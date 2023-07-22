@@ -73,23 +73,31 @@ const NavBar: FC<NavbarProps> = ({ films, filmsToDisp, setFilmsToDisp }) => {
   };
 
   const handleSearch = () => {
-    // let newFilmArr: FilmsType[];
+    const regex = new RegExp(`^${searchValue}`, "i");
 
-    // if(ageSearch == "all"){
-    //   newFilmArr = films;
-    // }
-    // else if(ageSearch == "14+") {
-
-    // }
-    // const regex = new RegExp(`^${searchValue}`, "i");
-
-    // const newFilmArr = films.filter((e) => e.title.match(regex));
-    // setFilmsToDisp(newFilmArr);
+    let newFilmArr = films.filter((e) => e.title.match(regex))
+    
+    setFilmsToDisp(newFilmArr);
   };
 
-  useEffect(() => {
-    dispatch(getByCookie());
-  }, []);
+  const handleAgeSearch = () => {
+    let newFilmArr = filmsToDisp;
+
+    if(ageSearch != "all"){
+      if(ageSearch == "14+"){
+        newFilmArr = filmsToDisp.filter((e) => (e.age != "0+"))
+      } else (
+        newFilmArr = filmsToDisp.filter((e) => (e.age == "19+"))
+      )
+
+      if(genreeSearch != "all"){
+        newFilmArr = filmsToDisp.filter((e) => (e.genree.includes(genreeSearch)))
+      }
+
+    } else (newFilmArr = films);
+
+    setFilmsToDisp(newFilmArr);
+  }
 
   useEffect(() => {
     if (admin) {
@@ -101,6 +109,8 @@ const NavBar: FC<NavbarProps> = ({ films, filmsToDisp, setFilmsToDisp }) => {
   }, [admin]);
 
   useEffect(() => {
+    dispatch(getByCookie());
+
     window.addEventListener("scroll", displaySmallNavBar);
 
     return () => {
@@ -110,7 +120,11 @@ const NavBar: FC<NavbarProps> = ({ films, filmsToDisp, setFilmsToDisp }) => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchValue, genreeSearch, ageSearch]);
+  }, [searchValue]);
+
+  useEffect(() => {
+    handleAgeSearch()
+  }, [genreeSearch, ageSearch]);
 
   return (
     <div className="navBar" style={smallNav ? { opacity: "0.9" } : {}}>

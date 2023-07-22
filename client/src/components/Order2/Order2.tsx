@@ -3,13 +3,15 @@ import React, { FC, useEffect, useState } from "react";
 import { FilmsType } from "../../types/films";
 import { ScreeningType } from "../../types/creeningType";
 import { useNavigate } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface Order2Props {
   filmId: string;
   classType: string;
+  setOrderDisp: CallableFunction;
 }
 
-const Order2: FC<Order2Props> = ({ filmId, classType }) => {
+const Order2: FC<Order2Props> = ({ filmId, classType, setOrderDisp }) => {
   const navigate = useNavigate();
   const [day, setDay] = useState("");
   const [dayId, setDayId] = useState("");
@@ -61,6 +63,14 @@ const Order2: FC<Order2Props> = ({ filmId, classType }) => {
 
   return (
     <div className={classType}>
+      {classType == "CardOrder" ? (
+        <CloseIcon
+          className="classType__close"
+          onClick={() => setOrderDisp(false)}
+        />
+      ) : (
+        <></>
+      )}
       <select
         value={day}
         onChange={handleDaySelect}
